@@ -3,7 +3,7 @@ package com.Igor;
 import java.util.*;
 
 class MergeSort{
-    public int [] sortArray (int [] array){
+    public Student [] sortArray (Student [] array){
         if (array == null){
             return null;
 
@@ -11,10 +11,10 @@ class MergeSort{
         if (array.length < 2){
             return array;
         }
-        int [] arrayLeft = new int[array.length/2];
+        Student [] arrayLeft = new Student[array.length/2];
         System.arraycopy(array, 0, arrayLeft, 0, array.length/2);
 
-        int [] arrayRight = new int[array.length - array.length/2];
+        Student [] arrayRight = new Student[array.length - array.length/2];
         System.arraycopy(array, array.length/2, arrayRight, 0, array.length - array.length/2);
 
         arrayLeft = sortArray(arrayLeft);
@@ -24,20 +24,20 @@ class MergeSort{
 
         return array;
     }
-    public int [] mergeArray (int [] arrayLeft,int []arrayRight){
+    public Student [] mergeArray (Student [] arrayLeft,Student []arrayRight){
         int lindex=0, rindex=0;
-        int [] array;
+        Student [] array;
 
         if (arrayLeft.length + arrayRight.length < 1) {
             return null;
         }
         else {
-            array = new int [ arrayLeft.length + arrayRight.length];
+            array = new Student [ arrayLeft.length + arrayRight.length];
         }
         for (int i = 0; i < arrayLeft.length + arrayRight.length; i++){
             if (lindex < arrayLeft.length){
                 if (rindex < arrayRight.length){
-                    if (arrayLeft[lindex] < arrayRight[rindex]){
+                    if (arrayLeft[lindex].compareTo(arrayRight[rindex])<0){
                         array[i]=arrayLeft[lindex];
                         lindex++;
                     }
@@ -84,13 +84,22 @@ class Student implements Comparable<Student>{
         return cgpa;
     }
     public int compareTo(Student s){
-        if (s.getCgpa()=this.getCgpa()){
-            return 0;
+        if (s.getCgpa() == this.getCgpa()){
+            if(s.getFname().equals(this.getFname())){
+                if (s.getId() < this.getId()) return -1;
+                else return 1;
+            }
+            else{
+                //boolean b = s.getFname().compareToIgnoreCase(this.getFname());
+                return this.getFname().compareToIgnoreCase(s.getFname());
+            }
         }
-        else if(s.getCgpa()<this.getCgpa()){
-            return 1;
+        else {
+            if(s.getCgpa()<this.getCgpa()){
+                return -1;
+            }
+            else return 1;
         }
-        return 0;
     }
 }
 
@@ -112,6 +121,9 @@ public class Solution
 
             testCases--;
         }
+        //MergeSort mergeSort = new MergeSort();
+        //mergeSort.sortArray(studentList);
+        Collections.sort(studentList);
 
         for(Student st: studentList){
             System.out.println(st.getFname());
