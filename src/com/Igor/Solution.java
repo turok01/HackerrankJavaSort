@@ -91,7 +91,7 @@ class Student implements Comparable<Student>{
             }
             else{
                 //boolean b = s.getFname().compareToIgnoreCase(this.getFname());
-                return this.getFname().compareToIgnoreCase(s.getFname());
+                return this.getFname().compareTo(s.getFname());
             }
         }
         else {
